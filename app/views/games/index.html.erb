@@ -1,7 +1,4 @@
-<h1>Landing page</h1>
-
-
-<%= link_to "Explorer les parties disponibles", games_path, class: "btn btn-primary" %>
-
+<h1>Voici la liste des missions disponibles</h1>
+<%= current_user.email %>
 <%= button_to "Créer une nouvelle partie - Back to Egypt", games_path,
     method: :post, class: "btn btn-success btn-lg" %>
