@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   put 'games/:id', to: 'games#update'
   post 'games/:id/start', to: 'games#start', as: 'start_game'
 
+  # Routes for Users
+  get 'profile', to: 'users#show', as: 'user_profile'
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

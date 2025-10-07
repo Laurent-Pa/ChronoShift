@@ -19,6 +19,7 @@ class GamesController < ApplicationController
       name: "Back to Egypt",
       duration: 20,
       score: 0,
+      elapsed_time: 0,
       is_finished: false
     )
 
