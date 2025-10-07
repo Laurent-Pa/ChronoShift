@@ -21,7 +21,12 @@ default: &default
 
 development:
   <<: *default
-  database: chrono_shift_development
+  # database: chrono_shift_development
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] || 5432 %>
+  database: <%= ENV['DB_NAME_DEV'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -79,6 +84,7 @@ test:
 #
 production:
   <<: *default
-  database: chrono_shift_production
-  username: chrono_shift
-  password: <%= ENV["CHRONO_SHIFT_DATABASE_PASSWORD"] %>
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_NAME_PROD'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
