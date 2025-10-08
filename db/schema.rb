@@ -17,13 +17,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_07_075924) do
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.integer "score"
-    t.boolean "is_finished", default: false
-    t.integer "duration", null: false
+    t.boolean "is_finished"
+    t.integer "duration"
     t.datetime "ends_at"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "elapsed_time", null: false
+    t.integer "elapsed_time"
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 

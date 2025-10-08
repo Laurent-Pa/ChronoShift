@@ -14,13 +14,15 @@
           <li class="nav-item active">
             <%= link_to "Mon espace", user_profile_path, class: "nav-link" %>
           </li>
+
           <li class="nav-item dropdown">
           <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= image_tag "avatar_user.png", class: "avatar", alt: "dropdown menu" %>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Settings", "#", class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+              <%# <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo: false}, class: "dropdown-item" %>
+              <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item", form: { data: { turbo: false } } %>
             </div>
           </li>
         <% else %>
