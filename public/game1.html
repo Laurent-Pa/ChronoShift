@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChronoShift - Jeu Égypte Antique</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #181c24;
+      color: #f5f5f5;
+      min-height: 100vh;
+    }
+    .navbar {
+      background: #23283a;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .navbar-user {
+      font-weight: bold;
+      color: #ffb347;
+      font-size: 1.1rem;
+    }
+    .navbar-timer {
+      background: #181c24;
+      color: #ffb347;
+      border-radius: 8px;
+      padding: 6px 18px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-left: 12px;
+      border: 1px solid #ffb347;
+    }
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .stop-btn {
+      background: #ff4d4d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 22px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .stop-btn:hover {
+      background: #d93636;
+    }
+    .congrats-icon {
+      font-size: 1.7rem;
+      margin-left: 10px;
+      color: #ffe066;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .main {
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      padding: 0 16px 32px 16px;
+    }
+    .questions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+    .question-box {
+      background: #23283a;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      padding: 28px 22px 20px 22px;
+      min-width: 220px;
+      max-width: 260px;
+      flex: 1 1 220px;
+      color: #e0e6ed;
+      text-align: left;
+      opacity: 0.5;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      position: relative;
+    }
+    .question-box.active {
+      opacity: 1;
+      pointer-events: auto;
+      border: 2px solid #ffb347;
+    }
+    .question-title {
+      font-size: 1.13rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #ffb347;
+    }
+    .question-input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #b0b8c1;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    .question-btn {
+      background: #ffb347;
+      color: #181c24;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .question-btn:disabled {
+      background: #b0b8c1;
+      color: #888fa3;
+      cursor: not-allowed;
+    }
+    .progress-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .progress-step {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #23283a;
+      border: 2px solid #b0b8c1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #b0b8c1;
+      font-weight: bold;
+      transition: background 0.2s, border 0.2s, color 0.2s;
+    }
+    .progress-step.filled {
+      background: #ffb347;
+      border: 2px solid #ffb347;
+      color: #181c24;
+    }
+    @media (max-width: 900px) {
+      .questions { flex-direction: column; align-items: center; }
+      .question-box { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-left">
+      <span class="navbar-user" id="username">Utilisateur</span>
+      <span class="navbar-timer" id="timer">03:00</span>
+    </div>
+    <div class="navbar-actions">
+      <button class="stop-btn" onclick="stopGame()">Stop</button>
+      <span class="congrats-icon" id="congrats-icon" title="Félicitations !" style="display:none;">🎉</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="questions" id="questions">
+      <!-- Les questions seront générées par JS -->
+    </div>
+    <div class="progress-bar" id="progress-bar">
+      <!-- Les étapes de progression -->
+    </div>
+  </div>
+  <script>
+    // --- CONFIG ---
+    const questions = [
+      { q: "Quel est le nom du plus célèbre pharaon de l'Égypte antique ?", a: "tutankhamon" },
+      { q: "Comment s'appelle le fleuve qui traverse l'Égypte ?", a: "nil" },
+      { q: "Quel monument est la plus grande pyramide d'Égypte ?", a: "kheops" },
+      { q: "Comment s'appelle l'écriture de l'Égypte antique ?", a: "hiéroglyphes" },
+      { q: "Quel animal était sacré pour les Égyptiens ?", a: "chat" },
+      { q: "Quel est le dieu à tête de chacal, gardien des tombeaux ?", a: "anubis" },
+    ];
+    let current = 0;
+    let answers = Array(questions.length).fill("");
+    let timer = 180;
+    let timerInterval;
+    // --- TIMER ---
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timer--;
+        const min = String(Math.floor(timer/60)).padStart(2,'0');
+        const sec = String(timer%60).padStart(2,'0');
+        document.getElementById('timer').textContent = `${min}:${sec}`;
+        if (timer <= 0) {
+          clearInterval(timerInterval);
+          disableAll();
+          window.location.href = '/listemissions.html';
+        }
+      }, 1000);
+    }
+    // --- QUESTIONS ---
+    function renderQuestions() {
+      const qDiv = document.getElementById('questions');
+      qDiv.innerHTML = '';
+      questions.forEach((q, i) => {
+        const box = document.createElement('div');
+        box.className = 'question-box' + (i === current ? ' active' : '');
+        box.innerHTML = `
+          <div class="question-title">Question ${i+1}</div>
+          <div>${q.q}</div>
+          <input class="question-input" id="input${i}" type="text" placeholder="Votre réponse..." ${i !== current ? 'disabled' : ''} value="${answers[i]}">
+          <button class="question-btn" id="btn${i}" ${i !== current ? 'disabled' : ''}>Valider</button>
+        `;
+        qDiv.appendChild(box);
+        if (i === current) {
+          setTimeout(() => { document.getElementById(`input${i}`).focus(); }, 100);
+        }
+        document.addEventListener('keydown', function handler(e) {
+          if (e.key === 'Enter' && i === current && document.activeElement === document.getElementById(`input${i}`)) {
+            document.getElementById(`btn${i}`).click();
+            document.removeEventListener('keydown', handler);
+          }
+        });
+        document.getElementById(`btn${i}`).onclick = () => submitAnswer(i);
+      });
+    }
+    function submitAnswer(i) {
+      const val = document.getElementById(`input${i}`).value.trim().toLowerCase();
+      if (val === questions[i].a) {
+        answers[i] = val;
+        if (i < questions.length - 1) {
+          current++;
+          renderQuestions();
+          renderProgress();
+        } else {
+          document.getElementById('congrats-icon').style.display = 'inline';
+          disableAll();
+          clearInterval(timerInterval);
+          // Stocker les résultats (tous vrais)
+          localStorage.setItem('missionsResults', JSON.stringify(Array(questions.length).fill(true)));
+          window.location.href = '/assets/images/victoire.html';
+        }
+      } else {
+        alert('Mauvaise réponse, essayez encore !');
+      }
+    }
+    function disableAll() {
+      for (let i = 0; i < questions.length; i++) {
+        document.getElementById(`input${i}`).disabled = true;
+        document.getElementById(`btn${i}`).disabled = true;
+      }
+    }
+    // --- PROGRESS ---
+    function renderProgress() {
+      const pDiv = document.getElementById('progress-bar');
+      pDiv.innerHTML = '';
+      for (let i = 0; i < questions.length; i++) {
+        const step = document.createElement('div');
+        step.className = 'progress-step' + (answers[i] ? ' filled' : '');
+        step.textContent = i+1;
+        pDiv.appendChild(step);
+      }
+    }
+    // --- STOP ---
+    function stopGame() {
+  clearInterval(timerInterval);
+  disableAll();
+  // Stocker les résultats réels (vrai/faux)
+  const results = questions.map((q, idx) => answers[idx] && answers[idx] === q.a);
+  localStorage.setItem('missionsResults', JSON.stringify(results));
+  window.location.href = '/listemissions.html';
+    }
+    // --- INIT ---
+    window.onload = function() {
+      // Simuler le nom utilisateur (à remplacer par une vraie variable si besoin)
+      document.getElementById('username').textContent = 'Utilisateur';
+      renderQuestions();
+      renderProgress();
+      startTimer();
+    };
+  </script>
+</body>
+</html>

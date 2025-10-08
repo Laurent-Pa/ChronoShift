@@ -1,0 +1,163 @@
+<%= render 'shared/navbar' %>
+
+<div class="container">
+  <img src="/assets/images/logo_chronoshift.png" alt="ChronoShift Logo" class="logo">
+  <h1>Bienvenue sur ChronoShift</h1>
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">🎲 Le Jeu</div>
+      <ul>
+        <li>Escape Game en ligne</li>
+        <li>Chaque seconde compte !</li>
+        <li>Résolvez des énigmes et déverrouillez des secrets</li>
+        <li>Collaborez pour sortir avant la fin du temps</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">💡 Le Projet</div>
+      <ul>
+        <li>Bien plus qu'un simple jeu</li>
+        <li>Découvrez les coulisses du développement</li>
+        <li>Mécaniques de jeu innovantes</li>
+        <li>Expérience conçue pour stimuler logique et esprit d'équipe</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🔎 Ce que vous allez découvrir</div>
+      <ul>
+        <li>Une aventure immersive</li>
+        <li>Des défis à relever</li>
+        <li>Des secrets à percer</li>
+        <li>Un univers à explorer</li>
+      </ul>
+    </div>
+  </div>
+  <div class="levels">
+    <div class="level-box active" onclick="window.location.href='/gameregles.html'">
+      <div class="level-title">Débutant</div>
+      <div class="level-desc">Commencez l'aventure et découvrez les bases du jeu d'évasion.</div>
+    </div>
+    <div class="level-box locked">
+      <div class="level-title">Intermédiaire</div>
+      <div class="level-desc">Débloquez ce niveau en terminant le mode Débutant.</div>
+      <div class="lock-icon">🔒</div>
+    </div>
+    <div class="level-box locked">
+      <div class="level-title">Expert</div>
+      <div class="level-desc">Débloquez ce niveau en terminant le mode Intermédiaire.</div>
+      <div class="lock-icon">🔒</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .container {
+    max-width: 700px;
+    margin: 80px auto 0 auto;
+    background: rgba(24,28,36,0.97);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    padding: 48px 32px 32px 32px;
+    text-align: center;
+  }
+  .logo {
+    width: 110px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 2.7rem;
+    margin-bottom: 18px;
+    letter-spacing: 2px;
+  }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: #23283a;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    padding: 22px 18px 16px 18px;
+    min-width: 210px;
+    max-width: 260px;
+    flex: 1 1 210px;
+    color: #e0e6ed;
+    text-align: left;
+  }
+  .card-title {
+    font-size: 1.18rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffb347;
+    letter-spacing: 1px;
+  }
+  .card ul {
+    padding-left: 18px;
+    margin: 0;
+  }
+  .card li {
+    margin-bottom: 7px;
+    font-size: 1.04rem;
+  }
+  .levels {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .level-box {
+    background: #23283a;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    padding: 28px 24px 20px 24px;
+    min-width: 180px;
+    max-width: 220px;
+    flex: 1 1 180px;
+    color: #e0e6ed;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 2px solid #ffb347;
+    position: relative;
+  }
+  .level-box.active:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 6px 18px rgba(255,179,71,0.18);
+    border-color: #ffa500;
+  }
+  .level-box.locked {
+    background: #2d3142;
+    color: #888fa3;
+    border: 2px dashed #888fa3;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  .level-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffb347;
+  }
+  .level-box.locked .level-title {
+    color: #888fa3;
+  }
+  .level-desc {
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+  .lock-icon {
+    font-size: 1.6rem;
+    margin-top: 6px;
+  }
+  @media (max-width: 900px) {
+    .cards { flex-direction: column; align-items: center; }
+    .card { max-width: 100%; }
+    .levels { flex-direction: column; align-items: center; }
+    .level-box { max-width: 100%; }
+  }
+</style>

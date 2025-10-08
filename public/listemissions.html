@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des missions - ChronoShift</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #181c24;
+      color: #f5f5f5;
+      min-height: 100vh;
+    }
+    .navbar {
+      background: #23283a;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .navbar-logo {
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #ffb347;
+      letter-spacing: 1px;
+    }
+    .navbar-links a {
+      color: #f5f5f5;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 1.05rem;
+      transition: color 0.2s;
+    }
+    .navbar-links a:hover {
+      color: #ffb347;
+    }
+    .missions-box {
+      margin: 80px auto 0 auto;
+      max-width: 600px;
+      background: #23283a;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      padding: 48px 32px 32px 32px;
+      text-align: center;
+    }
+    .missions-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffb347;
+      margin-bottom: 24px;
+    }
+    .missions-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .missions-list li {
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid #33374a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mission-status {
+      font-size: 1.3rem;
+      margin-left: 18px;
+    }
+    .mission-status.true {
+      color: #7fff7f;
+    }
+    .mission-status.false {
+      color: #ff4d4d;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-logo">ChronoShift</div>
+    <div class="navbar-links">
+      <a href="/landing_page.html">Accueil</a>
+      <a href="/gameregles.html">Règles</a>
+      <a href="/game1.html">Jeu</a>
+    </div>
+    <div class="navbar-logout">
+      <a href="/logout" title="Se déconnecter" style="display: flex; align-items: center;">
+        <span style="font-size:1.6rem; color:#ff4d4d;">&#128274;</span>
+      </a>
+    </div>
+    .navbar-logout {
+      margin-left: 24px;
+    }
+  </div>
+  <div class="missions-box">
+    <div class="missions-title">Liste des missions</div>
+    <ul class="missions-list" id="missions-list">
+      <!-- Les missions seront insérées ici par JS -->
+    </ul>
+    <button class="return-btn" onclick="window.location.href='/game1.html'">Reprendre le test</button>
+  </div>
+    .return-btn {
+      background: #ffb347;
+      color: #181c24;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 38px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 32px;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .return-btn:hover {
+      background: #ffa500;
+    }
+  <script>
+    // Exemple de récupération des réponses depuis le localStorage ou autre (à adapter selon votre logique)
+    // Pour la démo, on simule les réponses de la page précédente :
+    const questions = [
+      "Quel est le nom du plus célèbre pharaon de l'Égypte antique ?",
+      "Comment s'appelle le fleuve qui traverse l'Égypte ?",
+      "Quel monument est la plus grande pyramide d'Égypte ?",
+      "Comment s'appelle l'écriture de l'Égypte antique ?",
+      "Quel animal était sacré pour les Égyptiens ?",
+      "Quel est le dieu à tête de chacal, gardien des tombeaux ?"
+    ];
+    // Simuler des réponses (true = bonne réponse, false = mauvaise)
+    const results = JSON.parse(localStorage.getItem('missionsResults')) || [true, false, true, false, true, true];
+    const list = document.getElementById('missions-list');
+    questions.forEach((q, i) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${q}</span><span class="mission-status ${results[i] ? 'true' : 'false'}">${results[i] ? '✔️' : '❌'}</span>`;
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>

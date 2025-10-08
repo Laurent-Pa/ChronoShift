@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Règles du Jeu - ChronoShift</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #181c24;
+      color: #f5f5f5;
+      min-height: 100vh;
+    }
+    .navbar {
+      background: #23283a;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .navbar-logo {
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #ffb347;
+      letter-spacing: 1px;
+    }
+    .navbar-links a {
+      color: #f5f5f5;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 1.05rem;
+      transition: color 0.2s;
+    }
+    .navbar-links a:hover {
+      color: #ffb347;
+    }
+    .popup {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .popup-content {
+      background: #23283a;
+      border-radius: 14px;
+      padding: 36px 28px 28px 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      text-align: center;
+      max-width: 400px;
+      color: #e0e6ed;
+    }
+    .popup-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ffb347;
+      margin-bottom: 18px;
+    }
+    .popup-message {
+      font-size: 1.08rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .start-btn {
+      background: #ffb347;
+      color: #181c24;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 32px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .start-btn:hover {
+      background: #ffa500;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-logo">ChronoShift</div>
+    <div class="navbar-links">
+  <a href="/landing.html">Accueil</a>
+      <a href="#" onclick="showRulesPopup()">Règles</a>
+      <a href="/games/debutant">Débutant</a>
+    </div>
+  </div>
+  <div id="rules-popup" class="popup" style="display:flex;">
+    <div class="popup-content">
+      <div class="popup-title">Règles du jeu</div>
+      <div class="popup-message">
+        1. Résolvez les énigmes pour progresser dans l'aventure.<br>
+        2. Collaborez avec votre équipe pour trouver des indices.<br>
+        3. Faites attention au temps imparti pour chaque niveau.<br>
+        4. Chaque niveau débloque le suivant.<br>
+        Bonne chance et amusez-vous !
+      </div>
+      <button class="start-btn" onclick="window.location.href='file:///C:/Users/Mahdi/OneDrive/Desktop/chronoshift/ChronoShift/public/game1.html'">Start</button>
+    </div>
+  </div>
+  <script>
+    function showRulesPopup() {
+      document.getElementById('rules-popup').style.display = 'flex';
+    }
+    // Pour fermer le popup si besoin, vous pouvez ajouter un bouton ou cliquer en dehors
+    document.getElementById('rules-popup').addEventListener('click', function(e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
