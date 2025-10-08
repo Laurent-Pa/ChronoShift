@@ -1,4 +1,7 @@
  <div class="main" data-turbo="false">
+    <div class="timer-display">
+      Temps restant : <span id="timer"></span>
+    </div>
     <div class="questions" id="questions">
       <!-- Les questions seront générées par JS -->
     </div>
@@ -18,7 +21,7 @@
     ];
     let current = 0;
     let answers = Array(questions2.length).fill("");
-    let timer = 180;
+    let timer = 10;
     let timerInterval;
     // --- TIMER ---
     function startTimer() {
