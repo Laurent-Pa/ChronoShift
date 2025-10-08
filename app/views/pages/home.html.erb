@@ -1,7 +1,52 @@
-<h1>Landing page</h1>
+  <div class="container">
+  <img src="/assets/images/logo_chronoshift.png" alt="ChronoShift Logo" class="logo">
+    <h1>Bienvenue sur ChronoShift</h1>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">🎲 Le Jeu</div>
+        <ul>
+          <li>Escape Game en ligne</li>
+          <li>Chaque seconde compte !</li>
+          <li>Résolvez des énigmes et déverrouillez des secrets</li>
+          <li>Collaborez pour sortir avant la fin du temps</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">💡 Le Projet</div>
+        <ul>
+          <li>Bien plus qu'un simple jeu</li>
+          <li>Découvrez les coulisses du développement</li>
+          <li>Mécaniques de jeu innovantes</li>
+          <li>Expérience conçue pour stimuler logique et esprit d'équipe</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🔎 Ce que vous allez découvrir</div>
+        <ul>
+          <li>Une aventure immersive</li>
+          <li>Des défis à relever</li>
+          <li>Des secrets à percer</li>
+          <li>Un univers à explorer</li>
+        </ul>
+      </div>
+    </div>
+    <div class="levels">
+  <div class="level-box active">
 
-
-<%= link_to "Explorer les parties disponibles", games_path, class: "btn btn-primary" %>
-
-<%= button_to "Créer une nouvelle partie - Back to Egypt", games_path,
-    method: :post, class: "btn btn-success btn-lg" %>
+        <div class="level-title"><%= button_to "Débutant", games_path,
+    method: :post %>
+    </div>
+        <div class="level-desc">Commencez l'aventure et découvrez les bases du jeu d'évasion.</div>
+      </div>
+      <div class="level-box locked">
+        <div class="level-title">Intermédiaire</div>
+        <div class="level-desc">Débloquez ce niveau en terminant le mode Débutant.</div>
+        <div class="lock-icon">🔒</div>
+      </div>
+      <div class="level-box locked">
+        <div class="level-title">Expert</div>
+        <div class="level-desc">Débloquez ce niveau en terminant le mode Intermédiaire.</div>
+        <div class="lock-icon">🔒</div>
+      </div>
+    </div>
+  </div>

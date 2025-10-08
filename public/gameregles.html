@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Règles du Jeu - ChronoShift</title>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-logo">ChronoShift</div>
+    <div class="navbar-links">
+  <a href="/landing.html">Accueil</a>
+      <a href="#" onclick="showRulesPopup()">Règles</a>
+      <a href="/games/debutant">Débutant</a>
+    </div>
+  </div>
+  <div id="rules-popup" class="popup" style="display:flex;">
+    <div class="popup-content">
+      <div class="popup-title">Règles du jeu</div>
+      <div class="popup-message">
+        1. Résolvez les énigmes pour progresser dans l'aventure.<br>
+        2. Collaborez avec votre équipe pour trouver des indices.<br>
+        3. Faites attention au temps imparti pour chaque niveau.<br>
+        4. Chaque niveau débloque le suivant.<br>
+        Bonne chance et amusez-vous !
+      </div>
+      <button class="start-btn" onclick="window.location.href='file:///C:/Users/Mahdi/OneDrive/Desktop/chronoshift/ChronoShift/public/game1.html'">Start</button>
+    </div>
+  </div>
+  <script>
+    function showRulesPopup() {
+      document.getElementById('rules-popup').style.display = 'flex';
+    }
+    // Pour fermer le popup si besoin, vous pouvez ajouter un bouton ou cliquer en dehors
+    document.getElementById('rules-popup').addEventListener('click', function(e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
