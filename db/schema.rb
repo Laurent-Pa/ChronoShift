@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_171714) do
 
   create_table "riddles", force: :cascade do |t|
     t.string "title"
+    t.string "theme"
     t.text "question"
     t.text "answer"
     t.text "help"
@@ -50,14 +51,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_171714) do
   end
 
   create_table "scenarios", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
+    t.string "theme", null: false
+    t.string "difficulty", null: false
     t.text "description"
-    t.integer "difficulty", default: 0
-    t.integer "duration", default: 5
-    t.integer "total_riddles", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_scenarios_on_name"
+    t.index ["difficulty"], name: "index_scenarios_on_difficulty"
+    t.index ["theme"], name: "index_scenarios_on_theme"
   end
 
   create_table "users", force: :cascade do |t|
