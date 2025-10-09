@@ -1,12 +1,23 @@
-.navbar-lewagon {
+.navbar-chronoshift {
   justify-content: space-between;
-  background: white;
+  background: $dutch-white;
+  padding-top: 0.25rem;    /* Réduit le padding vertical */
+  padding-bottom: 0.25rem;
+  min-height: auto;
+  position: fixed;        /* Fixe la navbar en haut */
+  top: 0;                 /* Positionne en haut */
+  left: 0;                /* Positionne à gauche */
+  right: 0;               /* Positionne à droite */
+  width: 100%;            /* Occupe toute la largeur */
+  z-index: 1030;          /* Au-dessus du contenu (Bootstrap utilise 1030 pour les navbars) */
 }
 
-.navbar-lewagon .navbar-collapse {
+.navbar-chronoshift .navbar-collapse {
   flex-grow: 0;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.navbar-chronoshift .navbar-brand img {
+  height: 100%;
+  max-height: 50px;
+  width: auto;
 }

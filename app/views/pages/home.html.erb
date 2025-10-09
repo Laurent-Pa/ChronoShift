@@ -1,5 +1,4 @@
   <div class="container">
-  <img src="/assets/images/logo_chronoshift.png" alt="ChronoShift Logo" class="logo">
     <h1>Bienvenue sur ChronoShift</h1>
     <div class="cards">
       <div class="card">
@@ -31,13 +30,12 @@
       </div>
     </div>
     <div class="levels">
-  <div class="level-box active">
-
-        <div class="level-title"><%= button_to "Débutant", games_path,
-    method: :post %>
-    </div>
+    <div class="level-box active">
+      <%= button_to games_path, method: :post, class: "level-link", form_class: "level-form" do %>
+        <div class="level-title">Débutant</div>
         <div class="level-desc">Commencez l'aventure et découvrez les bases du jeu d'évasion.</div>
-      </div>
+      <% end %>
+    </div>
       <div class="level-box locked">
         <div class="level-title">Intermédiaire</div>
         <div class="level-desc">Débloquez ce niveau en terminant le mode Débutant.</div>
