@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_09_171714) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_09_221307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,15 +51,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_171714) do
   end
 
   create_table "scenarios", force: :cascade do |t|
-    t.string "theme", null: false
     t.string "difficulty", null: false
     t.text "description"
     t.text "duration"
     t.integer "total_riddles"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "theme"
     t.index ["difficulty"], name: "index_scenarios_on_difficulty"
-    t.index ["theme"], name: "index_scenarios_on_theme"
   end
 
   create_table "users", force: :cascade do |t|
