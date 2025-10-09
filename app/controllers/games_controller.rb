@@ -15,20 +15,18 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = current_user.games.build(
-      name: "Back to Egypt",
-      duration: 20,
-      score: 0,
-      elapsed_time: 0,
-      is_finished: false
-    )
+  @game = Game.new(game_params)
+  @game.user = current_user
+  @game.is_finished = false
+  @game.score = 0
+  @game.elapsed_time = 0
 
-    if @game.save
-      redirect_to game_path(@game), notice: 'Partie créée avec succès. Cliquer sur Démarrer pour lancer la partie.'
-    else
-      redirect_to games_path, alert: "Erreur lors de la création de la partie"
-    end
+  if @game.save
+    redirect_to game_path(@game)
+  else
+    render :new, status: :unprocessable_entity
   end
+end
 
   def edit
   end
@@ -63,6 +61,6 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.require(:game).permit(:name, :score, :is_finished, :duration)
+     params.require(:game).permit(:name, :scenario_id, :duration, :ends_at)
   end
 end
