@@ -1,7 +1,7 @@
 class CreateScenarios < ActiveRecord::Migration[7.1]
   def change
     create_table :scenarios do |t|
-      t.string :theme, null: false  # ← Ajout du thème
+      t.string :theme, null: false
       t.string :difficulty, null: false
       t.text :description
       t.text :duration
