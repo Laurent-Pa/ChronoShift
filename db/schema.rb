@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_09_123648) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_09_171714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,26 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_123648) do
     t.bigint "scenario_id", null: false
     t.index ["scenario_id"], name: "index_games_on_scenario_id"
     t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "riddles", force: :cascade do |t|
+    t.string "title"
+    t.text "question"
+    t.text "answer"
+    t.text "help"
+    t.text "lesson"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "riddles_scenarios", force: :cascade do |t|
+    t.bigint "scenario_id", null: false
+    t.bigint "riddle_id", null: false
+    t.integer "riddle_position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["riddle_id"], name: "index_riddles_scenarios_on_riddle_id"
+    t.index ["scenario_id"], name: "index_riddles_scenarios_on_scenario_id"
   end
 
   create_table "scenarios", force: :cascade do |t|
@@ -54,4 +74,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_123648) do
 
   add_foreign_key "games", "scenarios"
   add_foreign_key "games", "users"
+  add_foreign_key "riddles_scenarios", "riddles"
+  add_foreign_key "riddles_scenarios", "scenarios"
 end
