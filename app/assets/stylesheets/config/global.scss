@@ -1,18 +1,19 @@
 body {
       margin: 0;
+       padding-top: 70px;
       font-family: 'Segoe UI', Arial, sans-serif;
       background: $dutch-white;//#181c24;
       color: $eerie-black; //#f5f5f5;
       min-height: 100vh;
     }
-    .navbar {
-      background: $dutch-white;
-      padding: 16px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+    // .navbar {
+    //   background: $dutch-white;
+    //   // padding: 16px 32px;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: space-between;
+    //   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    // }
     .navbar-left {
       display: flex;
       align-items: center;
@@ -288,6 +289,7 @@ h1 {
   font-size: 2.7rem;
   margin-bottom: 18px;
   letter-spacing: 2px;
+  text-align: center;
 }
 .levels {
   display: flex;
