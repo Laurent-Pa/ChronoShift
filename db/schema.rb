@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_09_123648) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_09_171714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,15 +29,37 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_123648) do
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 
-  create_table "scenarios", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.integer "difficulty", default: 0
-    t.integer "duration", default: 5
-    t.integer "total_riddles", null: false
+  create_table "riddles", force: :cascade do |t|
+    t.string "title"
+    t.string "theme"
+    t.text "question"
+    t.text "answer"
+    t.text "hint"
+    t.text "lesson"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_scenarios_on_name"
+  end
+
+  create_table "riddles_scenarios", force: :cascade do |t|
+    t.bigint "scenario_id", null: false
+    t.bigint "riddle_id", null: false
+    t.integer "riddle_position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["riddle_id"], name: "index_riddles_scenarios_on_riddle_id"
+    t.index ["scenario_id"], name: "index_riddles_scenarios_on_scenario_id"
+  end
+
+  create_table "scenarios", force: :cascade do |t|
+    t.string "theme", null: false
+    t.string "difficulty", null: false
+    t.text "description"
+    t.text "duration"
+    t.integer "total_riddles"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["difficulty"], name: "index_scenarios_on_difficulty"
+    t.index ["theme"], name: "index_scenarios_on_theme"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,4 +76,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_123648) do
 
   add_foreign_key "games", "scenarios"
   add_foreign_key "games", "users"
+  add_foreign_key "riddles_scenarios", "riddles"
+  add_foreign_key "riddles_scenarios", "scenarios"
 end
