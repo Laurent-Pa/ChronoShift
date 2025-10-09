@@ -15,18 +15,21 @@ class GamesController < ApplicationController
   end
 
   def create
-  @game = Game.new(game_params)
-  @game.user = current_user
-  @game.is_finished = false
-  @game.score = 0
-  @game.elapsed_time = 0
+    scenario = Scenario.first
+    @game = Game.new(game_params)
+    @game.user = current_user
+    @game.is_finished = false
+    @game.score = 0
+    @game.elapsed_time = 0
+    @game.scenario_id = Scenario.first.id
+    @game.duration = scenario.duration
 
-  if @game.save
-    redirect_to game_path(@game)
-  else
-    render :new, status: :unprocessable_entity
+    if @game.save
+      redirect_to game_path(@game)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
-end
 
   def edit
   end
@@ -61,6 +64,6 @@ end
   end
 
   def game_params
-     params.require(:game).permit(:name, :scenario_id, :duration, :ends_at)
+    #  params.require(:game).permit(:scenario_id)
   end
 end
