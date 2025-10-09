@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_07_075924) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_09_123648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,7 +24,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_07_075924) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "elapsed_time"
+    t.bigint "scenario_id", null: false
+    t.index ["scenario_id"], name: "index_games_on_scenario_id"
     t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "scenarios", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "difficulty", default: 0
+    t.integer "duration", default: 5
+    t.integer "total_riddles", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_scenarios_on_name"
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,5 +52,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_07_075924) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "games", "scenarios"
   add_foreign_key "games", "users"
 end

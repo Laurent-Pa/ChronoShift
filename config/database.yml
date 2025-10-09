@@ -84,6 +84,7 @@ test:
 #
 production:
   <<: *default
+  # database: chrono_shift_development
   host: <%= ENV['DB_HOST'] %>
   database: <%= ENV['DB_NAME_PROD'] %>
   username: <%= ENV['DB_USERNAME'] %>
