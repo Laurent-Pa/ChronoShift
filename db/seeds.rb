@@ -11,56 +11,74 @@
 require 'csv'
 
 puts "Nettoyage de la base de données..."
+RiddlesScenario.destroy_all
 Riddle.destroy_all
 Scenario.destroy_all
 
 puts "Importation des scénarios depuis le CSV..."
 
-csv_file = Rails.root.join('db', 'scenarios.csv')
-csv_data = File.read(csv_file)
+
+csv_scenarios = Rails.root.join('db', 'scenarios.csv')
+
+# Vérifier que le fichier existe
+unless File.exist?(csv_scenarios)
+  puts "ERREUR : Le fichier #{csv_scenarios} n'existe pas !"
+  exit
+end
 
 scenarios_count = 0
 
-CSV.parse(csv_data, headers: true, header_converters: :symbol) do |row|
+CSV.foreach(csv_scenarios, headers: :first_row, col_sep: ';') do |row|
   Scenario.create!(
-    name: row[:name],
-    difficulty: row[:difficulty],
-    description: row[:description],
-    duration: row[:duration],
-    total_riddles: row[:total_riddles]
+    theme: row['theme'],
+    difficulty: row['difficulty'],
+    description: row['description'],
+    duration: row['duration'],
+    total_riddles: row['total_riddles']
   )
+
   scenarios_count += 1
 end
 
 puts "#{scenarios_count} scénarios créés"
 
-puts "🧩 Importation des riddles depuis le CSV..."
+puts "Importation des riddles depuis le CSV..."
 
-csv_file = Rails.root.join('db', 'riddles.csv')
-csv_data = File.read(csv_file)
+csv_riddles = Rails.root.join('db', 'riddles.csv')
+
 
 riddles_count = 0
 
-CSV.parse(csv_data, headers: true, header_converters: :symbol) do |row|
-  # Trouvez le scénario correspondant par la difficulté
-  scenario = Scenario.find_by(difficulty: row[:difficulty])
+position = 1
 
-  if scenario
-    Riddle.create!(
-      question: row[:question],
-      answer: row[:answer],
-      hint: row[:hint],
-      difficulty: row[:difficulty],
-      scenario: scenario
-      # Ajoutez d'autres champs selon votre structure
+# Récupérer le premier scénario
+first_scenario = Scenario.first
+
+if first_scenario.nil?
+  puts "Aucun scénario trouvé. Impossible d'associer les riddles."
+else
+  CSV.foreach(csv_riddles, headers: :first_row, col_sep: ';') do |row|
+    riddle = Riddle.create!(
+      theme: row['theme'],
+      title: row['title'],
+      question: row['question'],
+      answer: row['answer'],
+      hint: row['hint'],
+      lesson: row['lesson']
+    )
+
+    # Créer l'association avec la position
+    RiddlesScenario.create!(
+      riddle: riddle,
+      scenario: first_scenario,
+      riddle_position: position
     )
 
     riddles_count += 1
-  else
-    puts "⚠️  Scénario non trouvé pour la difficulté: #{row[:difficulty]}"
+    position += 1
   end
+
+  puts "#{riddles_count} riddles importés et associés au scénario '#{first_scenario.theme}'"
 end
 
-puts "✅ #{riddles_count} riddles importés"
-puts "🎉 Seeds terminés !"
-puts "📊 Résumé: #{Scenario.count} scénarios, #{Riddle.count} riddles"
+puts "Seeds terminés !"

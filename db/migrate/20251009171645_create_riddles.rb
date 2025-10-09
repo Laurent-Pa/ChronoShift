@@ -5,7 +5,7 @@ class CreateRiddles < ActiveRecord::Migration[7.1]
       t.string :theme
       t.text :question
       t.text :answer
-      t.text :help
+      t.text :hint
       t.text :lesson
 
       t.timestamps

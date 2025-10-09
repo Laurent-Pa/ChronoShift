@@ -1,10 +1,11 @@
 class CreateScenarios < ActiveRecord::Migration[7.1]
-   def change
+  def change
     create_table :scenarios do |t|
-      t.string :name, null: false
       t.string :theme, null: false  # ← Ajout du thème
       t.string :difficulty, null: false
       t.text :description
+      t.text :duration
+      t.integer :total_riddles
 
       t.timestamps
     end
