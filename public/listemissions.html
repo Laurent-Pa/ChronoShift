@@ -1,71 +1,238 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Liste des missions - ChronoShift</title>
   <style>
+/* === Missions === */
+.missions-box{
+  max-width: 920px;
+  margin: 42px auto;
+  padding: 26px;
+  background: $burnt-orange;       
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.10);
+}
+
+.missions-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.missions-title{
+  margin: 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  font-weight: 800;
+  color: $eerie-black;               
+  letter-spacing: .3px;
+}
+
+/* bouton principal – même logique que .question-btn / .level actions */
+.resume-all{
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  background: $dutch-white;          
+  color: $eerie-black;
+  border: 2px solid $burnt-orange;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  transition: transform .12s, box-shadow .12s, border-color .12s;
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+  &:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.12) }
+}
+
+/* liste + scrollbars (léger) */
+.missions-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 56vh;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.missions-list::-webkit-scrollbar{ width: 10px }
+.missions-list::-webkit-scrollbar-thumb{ border-radius: 10px; background: rgba(0,0,0,.15) }
+.missions-list::-webkit-scrollbar-track{ background: rgba(0,0,0,.06) }
+
+/* items = même logique que .question-box / .card dans tes diffs */
+.mission-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  background: $dutch-white;          // ancien: card sombre
+  color: $eerie-black;
+  border: 2px solid #e6e6e6;
+  border-radius: 14px;
+  transition: transform .12s, border-color .12s, box-shadow .12s;
+  &:hover{
+    transform: translateY(-2px);
+    border-color: $burnt-orange;
+    box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  }
+}
+.mission-item[data-state="wrong"],
+.mission-item[data-state="pending"]{ cursor: pointer }
+
+.mission-left{ display:flex; align-items:center; gap:12px }
+.mission-right{ display:flex; align-items:center; gap:12px }
+.mission-question{ font-size:.98rem; color:$eerie-black }
+
+/* badges = palette unifiée comme tes .progress-step/.question states */
+.badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:42px; height:34px; padding:0 10px;
+  border-radius:999px; font-weight:800; letter-spacing:.5px;
+  border:2px solid $burnt-orange;
+  background: $dutch-white;
+  color: $eerie-black;
+}
+.badge.correct{
+  border-color: rgba(36,209,161,.55);
+  background: $dutch-white;
+  color: $eerie-black;
+}
+.badge.wrong{
+  border-color: rgba(255,107,107,.55);
+  background: $dutch-white;
+  color: $eerie-black;
+}
+.badge.pending{
+  border-color: rgba(0,0,0,.25);
+  background: $dutch-white;
+  color: $eerie-black;
+}
+
+/* bouton “Reprendre ici” aligné à tes nouveaux boutons clairs */
+.btn-retry{
+  background: $dutch-white;
+  color: $eerie-black;
+  border: 2px solid $burnt-orange;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 700;
+  transition: transform .12s, box-shadow .12s, border-color .12s;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  &:hover{ transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.10) }
+}
+
+/* responsive */
+@media (max-width:680px){
+  .missions-box{ margin:22px 12px; padding:18px }
+  .missions-header{ flex-direction:column; align-items:flex-start; gap:10px }
+  .missions-list li{ padding:12px 12px }
+  .resume-all, .btn-retry{ padding:9px 12px }
+}
+
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <div class="navbar-logo">ChronoShift</div>
-    <div class="navbar-links">
-      <a href="/landing_page.html">Accueil</a>
-      <a href="/gameregles.html">Règles</a>
-      <a href="/game1.html">Jeu</a>
-    </div>
-    <div class="navbar-logout">
-      <a href="/logout" title="Se déconnecter" style="display: flex; align-items: center;">
-        <span style="font-size:1.6rem; color:#ff4d4d;">&#128274;</span>
-      </a>
-    </div>
-    .navbar-logout {
-      margin-left: 24px;
-    }
-  </div>
   <div class="missions-box">
-    <div class="missions-title">Liste des missions</div>
-    <ul class="missions-list" id="missions-list">
-      <!-- Les missions seront insérées ici par JS -->
-    </ul>
-    <button class="return-btn" onclick="window.location.href='/game1.html'">Reprendre le test</button>
+    <div class="missions-header">
+      <h1 class="missions-title">Liste des énigmes</h1>
+      <button class="resume-all" id="resume-all">Reprendre l’examen</button>
+    </div>
+
+    <ul class="missions-list" id="missions-list"></ul>
   </div>
-    .return-btn {
-      background: #ffb347;
-      color: #181c24;
-      border: none;
-      border-radius: 10px;
-      padding: 14px 38px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 32px;
-      transition: background 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    }
-    .return-btn:hover {
-      background: #ffa500;
-    }
+
   <script>
-    // Exemple de récupération des réponses depuis le localStorage ou autre (à adapter selon votre logique)
-    // Pour la démo, on simule les réponses de la page précédente :
-    const questions = [
-      "Quel est le nom du plus célèbre pharaon de l'Égypte antique ?",
-      "Comment s'appelle le fleuve qui traverse l'Égypte ?",
-      "Quel monument est la plus grande pyramide d'Égypte ?",
-      "Comment s'appelle l'écriture de l'Égypte antique ?",
-      "Quel animal était sacré pour les Égyptiens ?",
-      "Quel est le dieu à tête de chacal, gardien des tombeaux ?"
-    ];
-    // Simuler des réponses (true = bonne réponse, false = mauvaise)
-    const results = JSON.parse(localStorage.getItem('missionsResults')) || [true, false, true, false, true, true];
-    const list = document.getElementById('missions-list');
-    questions.forEach((q, i) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<span>${q}</span><span class="mission-status ${results[i] ? 'true' : 'false'}">${results[i] ? '✔️' : '❌'}</span>`;
-      list.appendChild(li);
+/**
+ * Questions (exemple). Remplace par tes vraies données si besoin.
+ */
+const questions = [
+  "Quel est le nom du plus célèbre pharaon de l'Égypte antique ?",
+  "Comment s'appelle le fleuve qui traverse l'Égypte ?",
+  "Quel monument est la plus grande pyramide d'Égypte ?",
+  "Comment s'appelle l'écriture de l'Égypte antique ?",
+  "Quel animal était sacré pour les Égyptiens ?",
+  "Quel est le dieu à tête de chacal, gardien des tombeaux ?"
+];
+
+/**
+ * Statuts stockés : true (correct), false (faux), null/undefined (non fait)
+ * Exemple:
+ * localStorage.setItem('missionsResults', JSON.stringify([true,false,null,true,false,null]))
+ */
+const stored = JSON.parse(localStorage.getItem("missionsResults")) || [];
+const states = questions.map((_, i) => {
+  const v = stored[i];
+  if (v === true)  return "correct";
+  if (v === false) return "wrong";
+  return "pending";
+});
+
+/** Helpers de navigation **/
+function goToQuestion(index){
+  localStorage.setItem("resumeQuestionIndex", String(index));
+  window.location.href = `/game1.html#q=${index + 1}`; // adapte l’URL si besoin
+}
+
+/** Rendu **/
+const list = document.getElementById("missions-list");
+list.innerHTML = "";
+
+questions.forEach((q, i) => {
+  const state = states[i];
+  const li = document.createElement("li");
+  li.className = "mission-item";
+  li.dataset.state = state;
+  li.dataset.index = i;
+
+  const badgeText = state === "correct" ? "✔️" : state === "wrong" ? "❌" : "⏳";
+  const badgeClass = state === "correct" ? "badge correct"
+                   : state === "wrong"   ? "badge wrong"
+                   :                      "badge pending";
+
+  const rightHtml = (state === "correct")
+    ? "" // rien du tout si c'est juste
+    : `<button class="btn btn-retry" data-action="retry" data-index="${i}">Reprendre ici</button>`;
+
+  li.innerHTML = `
+    <div class="mission-left">
+      <span class="${badgeClass}" title="${state}">${badgeText}</span>
+      <span class="mission-question">${i + 1}. ${q}</span>
+    </div>
+    <div class="mission-right">
+      ${rightHtml}
+    </div>
+  `;
+
+  // Ligne entière cliquable uniquement si non terminé
+  if (state !== "correct") {
+    li.addEventListener("click", (ev) => {
+      const isButton = ev.target.closest("button");
+      if (!isButton) goToQuestion(i);
     });
+  }
+
+  list.appendChild(li);
+});
+
+/** Délégation bouton "Reprendre ici" **/
+list.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-action='retry']");
+  if (!btn) return;
+  const idx = Number(btn.dataset.index);
+  goToQuestion(idx);
+});
+
+/** Reprendre l’examen (première énigme non terminée) **/
+document.getElementById("resume-all").addEventListener("click", () => {
+  const firstIncomplete = states.findIndex(s => s !== "correct");
+  const indexToOpen = firstIncomplete === -1 ? 0 : firstIncomplete;
+  goToQuestion(indexToOpen);
+});
   </script>
 </body>
 </html>
