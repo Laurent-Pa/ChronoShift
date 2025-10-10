@@ -9,10 +9,9 @@
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <div class="navbar-logo">ChronoShift</div>
-    <div class="navbar-links">
-  <a href="/landing.html">Accueil</a>
+  <%= render "shared/navbar" %>
+  <%= yield %>
+  <a href="/landing">Accueil</a>
       <a href="#" onclick="showRulesPopup()">Règles</a>
       <a href="/games/debutant">Débutant</a>
     </div>

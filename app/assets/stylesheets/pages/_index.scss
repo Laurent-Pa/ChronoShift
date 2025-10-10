@@ -1,2 +1,25 @@
 // Import page-specific CSS files here.
 @import "home";
+<h1>Voici la liste des missions disponibles</h1>
+<%= current_user.email %>
+<%= button_to "Créer une nouvelle partie - Back to Egypt", games_path,
+    method: :post, class: "btn btn-success btn-lg" %>
+<div class="missions-box">
+  <div class="card">
+    <div class="missions-header">
+      <div>
+        <h1 class="missions-title">Liste des missions</h1>
+        <p class="missions-subtitle">Récapitulatif de vos réponses</p>
+      </div>
+      <button class="btn-secondary" id="reset-results">Réinitialiser</button>
+    </div>
+
+    <div class="missions-body">
+      <ul class="missions-list" id="missions-list"></ul>
+    </div>
+
+    <div class="missions-actions">
+      <button class="return-btn" onclick="window.location.href='/game1.html'">Reprendre le test</button>
+    </div>
+  </div>
+</div>

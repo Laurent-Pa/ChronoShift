@@ -1,24 +1,89 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Victoire - ChronoShift</title>
   <style>
+    :root{
+      
+      --dutch-white: #fff7e3;  
+      --eerie-black: #1b1c24;   
+      --burnt-orange: #ffb347;  
+      --radius: 16px;
+      --shadow: 0 12px 32px rgba(0,0,0,.08);
+    }
+
+    *{ box-sizing: border-box }
+    html, body{ height:100% }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+      background: var(--dutch-white);
+      color: var(--eerie-black);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display:flex; align-items:flex-start; justify-content:center;
+    }
+
+    /* ===== Carte centrée ===== */
+    .center-box{
+      width: min(640px, 92vw);
+      margin: 80px 16px 0;
+      padding: clamp(20px, 4vw, 32px);
+      background: var(--dutch-white);
+      border: 2px solid var(--burnt-orange);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      animation: pop-in .35s ease-out both;
+    }
+
+    .victoire-title{
+      margin: 0 0 14px;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: .3px;
+      color: var(--eerie-black);
+    }
+
+    /* ===== Bouton ===== */
+    .recap-btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; cursor:pointer; user-select:none;
+      padding: 12px 20px;
+      font-weight: 800; font-size: 1rem;
+      background: var(--dutch-white);
+      color: var(--eerie-black);
+      border: 2px solid var(--burnt-orange);
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+      transition: transform .12s, box-shadow .12s, border-color .12s;
+    }
+    .recap-btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+      border-color: var(--burnt-orange);
+    }
+    .recap-btn:active{ transform: translateY(0) }
+
+    @keyframes pop-in{
+      from{ transform: translateY(8px); opacity: 0 }
+      to  { transform: translateY(0);  opacity: 1 }
+    }
+
+    /* Mobile */
+    @media (max-width:520px){
+      .recap-btn{ width:100% }
+    }
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <div class="navbar-logo">ChronoShift</div>
-    <div class="navbar-links">
-      <a href="/landing_page.html">Accueil</a>
-      <a href="/gameregles.html">Règles</a>
-      <a href="/game1.html">Jeu</a>
-    </div>
-  </div>
   <div class="center-box">
     <div class="victoire-title">🎉 VICTOIRE ! 🎉</div>
-    <button class="recap-btn" onclick="window.location.href='/Listesdesmissions.html'">Voir le récapitulatif</button>
+    <button class="recap-btn" onclick="window.location.href='/Listesdesmission'">
+      Voir le récapitulatif
+    </button>
   </div>
 </body>
 </html>
